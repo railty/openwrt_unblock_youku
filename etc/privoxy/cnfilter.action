@@ -1,0 +1,190 @@
+#Rules from Unblock-Youku by zhuzhuor et al.,
+#Converted to Privoxy rules by KarlCheong
+#https://github.com/karlcheong
+#https://twitter.com/karlcheong
+
+{ +filter{wildcardcrossdomain} +force-text-mode +forward-override{forward .} }
+.bilibili.com/crossdomain\.xml.*
+.youku.com/crossdomain\.xml.*
+.qiyi.com/crossdomain\.xml.*
+.iqiyi.com/crossdomain\.xml.*
+.letv.com/crossdomain\.xml.*
+.sohu.com/crossdomain\.xml.*
+.ku6.com/crossdomain\.xml.*
+.ku6cdn.com/crossdomain\.xml.*
+.pptv.com/crossdomain\.xml.*
+.pps.tv/crossdomain\.xml.*
+
+{ +filter{2345dianhua} +force-text-mode +forward-override{forward .} }
+chrome.2345.com/dianhua/$
+
+{ +filter{qqmusicsuck} +force-text-mode +forward-override{forward .} }
+s.plcloud.music.qq.com/fcgi-bin/p\.fcg.*
+
+{ +filter{bdmusicsuck} +force-text-mode }
+play.baidu.com/$
+play.baidu.com/\?.*
+
+{ +filter{163musicsuck} +force-text-mode +forward-override{forward .} }
+music.163.com/$
+music.163.com/my/$
+music.163.com/discover.*
+music.163.com/album\?.*
+music.163.com/playlist\?.*
+music.163.com/song\?.*
+music.163.com/artist\?.*
+music.163.com/dj\?.*
+
+{ +filter{kgmusicappsuck} +force-text-mode +forward-override{forward .} }
+mobilefeedback.kugou.com/.*
+ip2.kugou.com/check/isCn/.*
+ip.kugou.com/check/isCn/.*
+
+{ +filter{duomiappsuck} +force-text-mode +forward-override{forward .} }
+serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist.*
+
+{+filter{163musicappsuck} +force-text-mode +forward-override{forward .} }
+music.163.com/api/copyright/restrict/.*
+music.163.com/api/batch
+music.163.com/api/search/get\?.*
+music.163.com/api/artist/.*
+music.163.com/api/song/detail.*
+music.163.com/api/album/.*
+
+#{ +filter{xiamimusicsuck} +force-text-mode +forward-override{forward .} }
+{ +add-header{Client-IP: 219.158.33.69} +forward-override{forward .} }
+spark.api.xiami.com/api\?.*
+spark.api.xiami.com/api\?.*method=AuthIp.*
+spark.api.xiami.com/api\?.*method=Songs\.getTrackDetail.*
+spark.api.xiami.com/api\?.*method=Songs\.detail.*
+www.xiami.com/.*
+www.xiami.com/web/spark.*
+www.xiami.com/web/.*\?.*xiamitoken=.*
+interface.bilibili.com/playurl\?.*
+
+{ +filter{mytvhdsuck} +force-text-mode +forward-override{forward .} }
+vdo.mobile.tvb.com/2\.0/mytvhd/cc\.php
+v5.pc.duomi.com/single\-ajaxsingle\-isban.*
+chrome.2345.com/dianhua/index\.php\?m=call&f=check&.*
+
+{ +filter{mytvappsuck} +force-text-mode +forward-override{forward .} }
+vdo.mobile.tvb.com/checkCountryAllow\.php
+#api.ads.tvb.com/adtree/video\.php\?.*
+#api.ads.tvb.com/adtree/overlay\.php\?.*
+
+{ +filter{letvappsuck} +force-text-mode +forward-override{forward .} }
+api.letv.com/getipgeo
+hot.vrs.letv.com/.*
+static.app.m.letv.com/android/mod/mob/ctl/.*/act/detail/id/.*
+static.meizi.app.m.letv.com/android/mod/mob/ctl/.*/act/detail/id/.*
+
+{ +filter{sohuappsuck} +force-text-mode +forward-override{forward .} }
+api.tv.sohu.com/mobile_user/device/clientconf\.json\?.*
+api.tv.sohu.com/mobile/control/switch\.json\?.*
+api.tv.sohu.com/mobile/video/list\.json.*
+api.tv.sohu.com/set/info2/.*\.json.*
+api.tv.sohu.com/v4/mobile/video/list\.json.*
+api.tv.sohu.com/v4/album/info/.*\.json.*
+api.tv.sohu.com/v4/video/info/.*\.json.*
+
+{ +filter{qqvideoappsuck} +force-text-mode }
+bkmobile.video.qq.com/fcgi-bin/dout_.*\?.*
+mobile.video.qq.com/fcgi-bin/dout_.*\?.*
+sns.video.qq.com/fcgi-bin/rmd_mobile\?.*
+live.qq.com/json/ipad/cover/.*\.json.*
+
+{ +filter{iqiyiappsuck} +force-text-mode }
+iface.iqiyi.com/api/initLogin.*
+iface2.iqiyi.com/php/xyz/iface/\?.*
+iface2.iqiyi.com/php/xyz/entry/\?.*
+iface2.iqiyi.com/php/xyz/entry/nebula\.php\?.*
+mixer.cupid.iqiyi.com/mixer\?.*
+cache.m.iqiyi.com/jp/tmts/.*
+
+{ +filter{iqiyicdata} +force-text-mode +forward-override{forward .} }
+cdata.video.qiyi.com:8888/client
+
+{ +filter{youkuappsuck} +force-text-mode }
+api.3g.youku.com/layout/phone3_0/shows/.*
+api.3g.youku.com/layout/ios3_0/play/detail.*
+api.3g.tudou.com/v3_3/album/videos.*
+api.3g.tudou.com/v4/album/videos.*
+api.3g.tudou.com/todou/play/detail/desc.*
+play.api.3g.tudou.com/v.*
+api.mobile.youku.com/layout/android3_0/play/detail.*
+api.mobile.youku.com/shows/.*/reverse/videos.*
+
+{ +filter{youkuappad} +force-text-mode }
+pl.youku.com/playlist/m3u8\?keyframe=0&.*
+
+{ +filter{iqiyisuck} +force-text-mode +forward-override{forward .} }
+data.video.qiyi.com/v\.(f4v|ts)\?.*
+cache.vip.qiyi.com/vms\?.*
+cache.video.qiyi.com/vms\?.*
+iplocation.geo.qiyi.com/cityjson
+
+{ +filter{tudousuck} +force-text-mode +forward-override{forward .} }
+.tudou.com/listplay/.*
+.tudou.com/albumplay/.*
+.tudou.com/programs/view/.*
+.tudou.com/outplay/goto/getTvcCode\.action.*
+.tudou.com/tvp/alist\.action\?.*
+.tudou.com/tvp/getItemInfo\.action\?.*
+
+{ +filter{letvlivesuck} +force-text-mode +forward-override{forward .} }
+api.letv.com/streamblock.*
+dynamic.live.app.m.letv.com/android/dynamic\.php\?.*act=canplay.*
+
+{ +filter{kankansuck} +force-text-mode +forward-override{forward .} }
+geo.js.kankan.xunlei.com/.*
+
+{ +filter{qqfilmsuck} +force-text-mode +forward-override{forward .} }
+aid.video.qq.com/fcgi-bin/userip\?.*
+aidbak.video.qq.com/fcgi-bin/userip\?.*
+
+{ +filter{cntvvideosuck} +force-text-mode +forward-override{forward .} }
+vdn.apps.cntv.cn/api/getHttpVideoInfo\.do\?.*
+
+{ +filter{duokanboxsuck} +force-text-mode +forward-override{forward .} }
+internal.check.duokanbox.com/check\.json
+
+{ +change-x-forwarded-for{block} +add-header{X-Forwarded-For: 58.255.55.161} +forward-override{forward .} }
+www.bilibili.com
+epg.api.pptv.com/detail\.api\?.*
+play.api.pptv.com/boxplay\.api\?.*
+web-play.pptv.com/.*
+web-play.pplive.cn/.*
+live.gslb.letv.com/gslb\?.*
+ac.qq.com/.*/v/cid/.*
+*.ssports.com/.*
+ssports.com/.*
+
+{+redirect{s@^http://ark.letv.com/s\?(.*)ark=\d+(.*)@http://ark.letv.com/s?$1ark=2$2@}}
+ark.letv.com/s\?.*ark=\d+.*
+
+{+redirect{s@^http://v.aty.sohu.com/v\?(.*)fee=0(.*)@http://v.aty.sohu.com/v\?$1fee=2$2@}}
+v.aty.sohu.com/v\?.*fee=0.*
+
+#{+redirect{s@^http://valf.atm.youku.com/vf\?(.*)paid=0(.*)@http://valf.atm.youku.com/vf\?$1paid=1$2@}}
+#valf.atm.youku.com/vf\?.*paid=0.*
+
+{+redirect{s@^http://valf.atm.youku.com/vf\?(.*)bt=pc(.*)@http://valf.atm.youku.com/vf\?$1bt=phone$2@}}
+valf.atm.youku.com/vf\?.*bt=.*
+
+#{+redirect{s@cctv_p2p_hd(cc|b)tv(\d).*@cctv_p2p_hd$1tv$2@}}
+#vdn.live.cntv.cn/api2/live\.do\?channel=pa://cctv_p2p_hdcctv5.*
+#vdn.live.cntv.cn/api2/live\.do\?channel=pa://cctv_p2p_hdcctv6.*
+#vdn.live.cntv.cn/api2/live\.do\?channel=pa://cctv_p2p_hdcctv8.*
+#vdn.live.cntv.cn/api2/live\.do\?channel=pa://cctv_p2p_hdbtv6.*
+#vdn.apps.cntv.cn/api/getLiveUrlCommonApi\.do\?pa://cctv_p2p_hdcctv5.*
+#vdn.apps.cntv.cn/api/getLiveUrlCommonApi\.do\?pa://cctv_p2p_hdcctv6.*
+#vdn.apps.cntv.cn/api/getLiveUrlCommonApi\.do\?pa://cctv_p2p_hdcctv8.*
+#vdn.apps.cntv.cn/api/getLiveUrlCommonApi\.do\?pa://cctv_p2p_hdbtv6.*
+
+{+block{Video ads}}
+vv.video.qq.com/getvmind\?.*
+iface.iqiyi.com/api/getNewAdInfo.*
+tuner.pandora.com/services/json/\?method=ad\..*
+www.pandora.com/radio/services/brokenAd\.jsp
+
+{+crunch-client-header{User-Agent:} +add-header{User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D201 Safari/9537.53}}

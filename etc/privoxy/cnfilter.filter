@@ -1,0 +1,187 @@
+#Rules from Unblock-Youku by zhuzhuor et al.,
+#Converted to Privoxy rules by KarlCheong
+#https://github.com/karlcheong
+#https://twitter.com/karlcheong
+
+FILTER: removeproxysuck filter my proxy junk
+s|(.*)<div></div><script></script>\x0a<script.*.82:8100/adapter\.js">\x0a</script>\x0a|$1|
+
+FILTER: wildcardcrossdomain change the crossdomain xml to wildcard
+s|.*||g
+#s|\x0d||g
+#s|\x0a||g
+s||<?xml version="1.0" encoding="UTF-8"?>\x0d\x0a<cross-domain-policy>\x0d\x0a <allow-access-from domain="*"/>\x0d\x0a</cross-domain-policy>\x0d\x0a|
+
+FILTER: 2345dianhua remove 2345dianhua browser detection
+s|<script type="text/javascript" >\x0d\x0awindow\.onload = function\(\)\{\x0d\x0a\x09.*css\('z-index',20\);\x0d\x0a\};\x0d\x0a</script>||
+
+FILTER: qqmusicsuck Replace MusicJsonCallback({ret:0}) with MusicJsonCallback({ret:1})
+s|ret:0|ret:1|g
+s|ret":0|ret":1|g
+
+FILTER: bdmusicsuck Replace mbox.isForeign = "1"; with mbox.isForeign = "";
+s|isForeign = "1";|isForeign = "";|ig
+
+FILTER: 163musicsuck Replace Copyright codes
+s|var GCopyrights = \[.*\];|var GCopyrights = [];|U
+s|var GRestrictive = true;|var GRestrictive = false;|
+s|var tmp_restrictive = isRestrictive\(x\)|var tmp_restrictive = false|
+s|data-res-copyright="0"|data-res-copyright="1"|g
+s|data-copyright="0"|data-copyright="1"|g
+#s|copyright="0"|copyright="1"|g
+s|li class="js-dis"|li onmouseover="this.className='z-hvr'" onmouseout="this.className=''"|g
+s|class="(.*) js-dis">|class="$1">|g
+
+FILTER: kgmusicappsuck Replace "flag":0 with "flag":1
+s|"flag":0|"flag":1|g
+
+FILTER: duomiappsuck Replace "overseaip":1 with "overseaip":0
+s|"overseaip":1|"overseaip":0|g
+
+FILTER: 163musicappsuck Replace restrictedCopyright":[5002,5003,5001], to [],
+s|"restrictedCopyright":\[.*\],|"restrictedCopyright":[],|
+s|"status":\-1,|"status":0,|g
+s|"status":1,|"status":0,|g
+
+FILTER: xiamimusicsuck Replace play_authority":0 with play_authority":1
+s|play_authority":0|play_authority":1|g
+
+FILTER: mytvhdsuck Replace 0 with 1
+s|.*|1|
+
+FILTER: mytvappsuck Replace country=HK, accept=true
+s|"country":"..|"country":"HK|
+s|"accept":false|"accept":true|
+s|"preroll":1|"preroll":0|
+s|"midroll1":1|"midroll1":0|
+s|"midroll2":1|"midroll2":0|
+s|"midroll3":1|"midroll3":0|
+s|"live":1|"live":0|
+s|"general":1|"general":0|
+s|"start" : \d+,|"start" : 65535,|
+s|"duration" : \d+,|"duration" : 1,|
+s|"interval" : \d+|"interval" : 65535|
+
+FILTER: letvappsuck letv app kills ad and allow download
+s|"userCountry":"..|"userCountry":"CN|
+s|"allowplay":"0|"allowplay":"1|
+s|"ip":"0|"ip":"1|
+s|"download":"0"|"download":"1"|g
+s|"download":0|"download":1|g
+s|"pay":"1"|"pay":"0"|g
+
+FILTER: sohuappsuck sohuvideo app kills ad and allow download
+s|"iplimit":1|"iplimit":0|ig
+s|"mobileLimit":1|"mobileLimit":0|g
+s|"isDownload":0|"isDownload":1|g
+s|"is_download":0|"is_download":1|g
+s|"ip_limit":1|"ip_limit":0|g
+s|"mobile_limit":1|"mobile_limit":0|g
+s|"fee":.|"fee":0|g
+s|"fee_month":.|"fee_month":0|g
+s|advertise3g":1|advertise3g":0|
+s|openfrontAds":1|openfrontAds":0|
+s|frontAdsTime":"\d+"|frontAdsTime":"0"|
+s|frontAdsovertime":\d+|frontAdsovertime":0|
+s|openlocalAds":1|openlocalAds":0|
+s|startPicAdsTime":"\d+"|startPicAdsTime":"0"|
+s|openstartPicAds":1|openstartPicAds":0|
+s|openstopAds":1|openstopAds":0|
+s|autoUpload":1|autoUpload":0|
+s|frontAdsCids":".*"|frontAdsCids":""|U
+
+FILTER: qqvideoappsuck qqvideo app kills ad and allow download
+s|"c_download":.*0,(.*)"|"c_download": 1,$1"|Ug
+s|"download":.*0,(.*)"|"download": 1,$1"|Ug
+s|"apad":0|"apad":1|g
+s|"aphone":0|"aphone":1|g
+s|"client":0|"client":1|g
+s|"ipad":0|"ipad":1|g
+s|"iphone":0|"iphone":1|g
+s|"tv":0|"tv":1|g
+s|"web":0|"web":1|g
+s|"wpad":0|"wpad":1|g
+s|"wphone":0|"wphone":1|g
+
+FILTER: iqiyiappsuck iqiyi app kills ad and allow download
+s|"show_ad":1|"show_ad":0|g
+s|"skip_ad":1|"skip_ad":0|g
+s|"vip7":0|"vip7":1|g
+#s|"download_limit":\d|"download_limit":0|g
+s|_dl":0|_dl":1|ig
+s|_dl":"0|_dl":"1|ig
+s|"ad_str":.*\}\\n",||g
+#s|\x5f\x64\x6c\x53(.)\x01\x30\x53|\x5f\x64\x6c\x53$1\x01\x31\x53|g
+#s|\x5f\x64\x6c\x49(.)(.)(.)(.)\x53|\x5f\x64\x6c\x49$1$1$1\x01\x53|g
+#s|timePosition":".*","order|timePosition":"1","order|Ug
+#s|"enableMiaozhenSDK":1|"enableMiaozhenSDK":0|g
+#s|"enableAdMasterSDK":1|"enableAdMasterSDK":0|g
+#s|"enableMiaozhenSDK\\":1|"enableMiaozhenSDK\\":0|g
+#s|"enableAdMasterSDK\\":1|"enableAdMasterSDK\\":0|g
+#s|"enableMiaozhenSDK\\\\\\":1|"enableMiaozhenSDK\\\\\\":0|g
+#s|"enableAdMasterSDK\\\\\\":1|"enableAdMasterSDK\\\\\\":0|g
+#s|"duration":[0-9][0-9]|"duration":00|g
+#s|"duration":\d+|"duration":0|g
+#s|"duration\\":\d+|"duration\\":0|g
+#s|"pause_ad":[0-9][0-9]|"pause_ad":00|g
+#s|"pause_ad":\d+|"pause_ad":0|g
+#s|"ad":1|"ad":0|g
+#s|"mp4_ad_to":.|"mp4_ad_to":0|g
+#s|"open_p2p":1|"open_p2p":0|g
+#s|"open_p2p_down":1|"open_p2p_down":0|g
+
+FILTER: iqiyicdata modify cdata p2p tracker
+s|group_num=\d+|group_num=5|
+s|url_num=\d+|url_num=3|
+s|level_num=\d+|level_num=3|
+s|outside_address=.*|outside_address=121\.199\.24\.174|
+s|operator=\d+|operator=104|
+s|\x0a\[tracker2\]||
+s|\x0a\[tracker3\]||
+s|\x0atracker_info.*:CNC:.*||g
+s|\x0atracker_info.*:CT:.*||g
+s|\[stun\]|tracker_info41=119\.188\.110\.85:8989:1:CRTC:North\x0atracker_info45=119\.97\.157\.190:8989:2:CRTC:North\x0atracker_info48=119\.97\.157\.164:8989:3:CRTC:North\x0atracker_info49=119\.97\.145\.15:8989:4:CRTC:North\x0atracker_info51=119\.97\.145\.15:8989:5:CRTC:North\x0a\[stun\]|
+
+FILTER: youkuappsuck Replace "limit":1 with "limit":0
+s|"limit":1|"limit":0|g
+s|"limit":\s1|"limit": 0|g
+
+FILTER: youkuappad block youku video ads with dummy video
+s|.*||g
+#s|\x0d||g
+#s|\x0a||g
+s||\#EXTM3U\x0d\x0a\#EXT-X-TARGETDURATION:5\x0d\x0a\#EXT-X-VERSION:2\x0d\x0a\#EXTINF:1,\x0d\x0a\http://berrybirddisk.appspot.com/112001-blank.flv\x0d\x0a\#EXT-X-ENDLIST|
+
+FILTER: letvlivesuck Replace playStatus 1 with 0
+s|"playStatus":1|"playStatus":0|g
+s|"canPlay":"0"|"canPlay":"1"|
+
+FILTER: iqiyisuck Replace location(t) with CT/CNC & Fix iplocation.geo.iqiyi.com
+s/OVERSEA\|.*\-/CT\|BeiJing-/Ui
+s|"isp_id":\d+|"isp_id":2|
+s|"country_id":\d+|"country_id":145|
+s|"province_id":\d+|"province_id":1|
+s|"city_id":\d+|"city_id":1000|
+s|"location_id":\d+|"location_id": 1001000|
+s|"location_id": \d+|"location_id": 1001000|
+
+FILTER: tudousuck Replace tvcCode=? with tvcCode=-1
+s|,tvcCode: '\d+'|,tvcCode: '-1'|g
+s|,tvcCode: '\-2'|,tvcCode: '-1'|g
+s|"message":"\d+",|"message":"-1",|g
+s|"message":"\-2",|"message":"-1",|g
+s|"tvcCode":"\d+|"tvcCode":"-1|g
+s|"tvcCode":"\-2|"tvcCode":"-1|g
+
+FILTER: kankansuck change kkarea to 1
+s|var kkarea = .*;|var kkarea = 1;|
+
+FILTER: qqfilmsuck change limit to 0
+s|limit":1|limit":0|
+
+FILTER: cntvvideosuck change is_invalid_copyright, is_protected to 0 
+s|is_invalid_copyright":"1"|is_invalid_copyright":"0"|
+s|is_protected":"1"|is_protected":"0"|
+
+FILTER: duokanboxsuck change internal":"0 to 1
+s|"internal":"0"|"internal":"1"|
